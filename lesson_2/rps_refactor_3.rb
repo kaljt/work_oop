@@ -50,88 +50,84 @@ class Move
   def >(other_move)
     case value
     when 'rock'
-      return true if other_move.value == 'scissors'
-      return false
+      other_move.value == 'scissors'
     when 'paper'
-      return true if other_move.value == 'rock'
-      return false
+      other_move.value == 'rock'
     when 'scissors'
-      return true if other_move.value == 'paper'
-      return false
+      other_move.value == 'paper'
     end
   end
-  
+
   def <(other_move)
     case @value
     when 'rock'
-      return true if other_move.value == 'paper'
-      return false
+      other_move.value == 'paper'
     when 'paper'
-      return true if other_move.value == 'scissors'
-      return false
+      other_move.value == 'scissors'
     when 'scissors'
-      return true if other_move.value == 'rock'
-      return false
+      other_move.value == 'rock'
     end
   end
-  
 end
 
 class Rule
-  
 end
 
 class RPSGame
   attr_reader :human, :computer
-  
+
   def initialize
     @human = Human.new
     @computer = Computer.new
   end
+
   def display_welcome_message
     puts "Welcome to Rock, Paper, Scissors!"
   end
-  
+
   def display_goodbye_message
     puts "Thanks for playing Rock, Paper, Scissors. Goodbye!"
   end
-  
-  def display_winner
-    puts "#{human.name} chose #{human.move.value}" 
+
+  def display_moves
+    puts "#{human.name} chose #{human.move.value}"
     puts "#{computer.name} chose #{computer.move.value}"
-    
+  end
+
+  def display_winner
     if human.move > computer.move
       puts "#{human.name} won!"
-      elsif human.move < computer.move
-        puts "#{computer.name} won!"
-      else
-        puts "It's a tie"
+    elsif human.move < computer.move
+      puts "#{computer.name} won!"
+    else
+      puts "It's a tie"
     end
   end
-  
+
   def play_again?
     answer = ''
-    loop do 
-    puts "Would you like to play again (y/n)?"
-    answer = gets.chomp
-    break if ['y', 'n'].include? answer.downcase
-    puts "Sorry, must be y or n"
+    loop do
+      puts "Would you like to play again (y/n)?"
+      answer = gets.chomp
+      break if ['y', 'n'].include? answer.downcase
+      puts "Sorry, must be y or n"
     end
-    return true if answer == 'y'
-    return false
+
+    return false if answer.downcase == 'n'
+    return true if answer.downcase == 'y'
   end
-  
+
   def play
     display_welcome_message
-    loop do 
-    human.choose
-    computer.choose
-    display_winner
-    break unless play_again?
+    loop do
+      human.choose
+      computer.choose
+      display_moves
+      display_winner
+      break unless play_again?
     end
     display_goodbye_message
   end
-  
 end
 
 RPSGame.new.play
