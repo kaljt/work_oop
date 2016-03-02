@@ -1,3 +1,4 @@
+require 'pry'
 class Player
   attr_accessor :move, :name, :score, :history
   def initialize
@@ -83,6 +84,7 @@ class RPSGame
   def initialize
     @human = Human.new
     @computer = Computer.new
+    binding.pry
   end
 
   def display_welcome_message
